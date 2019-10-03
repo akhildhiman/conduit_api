@@ -17,7 +17,7 @@ var commentSchema = new mongoose.Schema({
     }
 })
 
-commentSchema.plugin(URLSlug("title", {field: Slug}));
+commentSchema.plugin(URLSlug("title", {field: "slug"}));
 
 var Comment = mongoose.model("Comment", commentSchema);
 
