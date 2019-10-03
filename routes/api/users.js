@@ -1,17 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var User = require("../models/User");
+var User = require("../../models/User");
 var jwt = require("jsonwebtoken");
-var authToken = require("../modules/verifyToken");
+var authToken = require("../../modules/verifyToken");
 
 console.log("inside");
-console.log(authToken.verifyToken);
+// console.log(authToken.verifyToken);
 
 // Getting users saved in the database 
 router.get('/', function(req, res, next) {
+  console.log("inside get");
   User.find((err, users) => {
-    res.json(users)
+    if (err) console.log("error");
+    return res.json(users);
   })
+  next();
 });
 
 // Welcome Route
@@ -25,7 +28,8 @@ router.post("/register", (req, res) => {
   console.log(req.body);
   User.create(req.body, (err, user) => {
     console.log(user)
-    if (err) console.log(err)
+    if (err) console.log(err);
+    return res.json(user)
   })
 })
 
@@ -51,7 +55,7 @@ router.use(authToken.verifyToken);
 // Delelte an user
 router.delete("/delete", (req, res) => {
   User.findByIdAndDelete(req.userId, (err, user) => {
-    console.log("inside ")
+    console.log("inside delete user")
     if (err) return json(err);
     return res.json(user);
   })
@@ -72,9 +76,6 @@ router.put("/:id", (req, res, next) => {
     return res.json(user);
   })
 })
-
-
-
 
 
 module.exports = router;
