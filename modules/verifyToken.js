@@ -8,7 +8,7 @@ exports.verifyToken = function(req, res, next) {
         jwt.verify(token, "secret", function(err, decoded) {
             console.log("inside verify token");
             if (err) return res.json(err);
-            req.userId = decoded.userId; //decoding the userId
+            req.userId = decoded.userId; //decoding the userId 
             console.log(req.userId);
             next();
         })
@@ -17,5 +17,7 @@ exports.verifyToken = function(req, res, next) {
         res.json({message: "User is not logged in"});
     }
 }
+
+
 
 
